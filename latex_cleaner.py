@@ -124,8 +124,13 @@ def copy_style_files(ext, dest_directory, main_file):
 def run_latex(main_file, dest_directory):
   # find the path to `latexit`
   path2latexit = (Path(sys.argv[0]).parent/'latexit').resolve().as_posix()
-  newpath2main = (Path(main_file).parent/dest_directory/Path(main_file).stem).resolve()
-  bashCommand = "{} {}".format(path2latexit, newpath2main)
+  newpath2dest = (Path(main_file).parent/dest_directory).resolve()
+
+  ## move to the new directory
+  os.chdir(newpath2dest)
+
+  ## run latex
+  bashCommand = "{} {}".format(path2latexit, Path(main_file).stem)
   subprocess.check_call(bashCommand.split(' '), stdout=sys.stdout, stderr=subprocess.STDOUT)
  
 if __name__ == '__main__':
