@@ -22,6 +22,8 @@ import re
 import argparse
 from pathlib import Path
 import glob
+import sys
+import subprocess
 import pdb
 
 def find_snippets(path2file):
@@ -119,6 +121,13 @@ def copy_style_files(ext, dest_directory, main_file):
         shutil.copy(file, Path(dest_directory)/Path(file).name)
         print(file)
 
+def run_latex(main_file, dest_directory):
+  # find the path to `latexit`
+  path2latexit = (Path(sys.argv[0]).parent/'latexit').resolve().as_posix()
+  newpath2main = (Path(main_file).parent/dest_directory/Path(main_file).stem).resolve()
+  bashCommand = "{} {}".format(path2latexit, newpath2main)
+  subprocess.check_call(bashCommand.split(' '), stdout=sys.stdout, stderr=subprocess.STDOUT)
+ 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-main', type=str, help='path to main file')
@@ -126,6 +135,9 @@ if __name__ == '__main__':
                       help='path 2 destination directory')
   parser.add_argument('-ext', type=str, nargs='+', default=['sty', 'cls', 'bst', 'bib', 'clo'],
                       help='extra files to be copied')
+  parser.add_argument('-latexit', action='store_true',
+                      help='compile newly clreated latex files')
+
   args = parser.parse_args()
   
   main_file = args.main
@@ -143,3 +155,9 @@ if __name__ == '__main__':
   print('====================')
   copy_style_files(ext, dest_directory, main_file)
   print('====================')
+
+  if args.latexit:
+    print('====================')
+    print('Compiling {}'.format(main_file))
+    print('====================')
+    run_latex(main_file, dest_directory)

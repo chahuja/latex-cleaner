@@ -35,10 +35,12 @@ Requirements
 Usage
 -----
 ```
-python latex_cleaner.py -main <path2mainfile> -dest <path2destination_directory> -ext <list of extensions to be copied as is>
+python latex_cleaner.py -main <path2mainfile> -dest <path2destination_directory> -ext <list of extensions to be copied as is> -latexit 
 ```
 
-Note: -dest or destination directory is relative to the directory in which the main file exists. By default a directory named tex_cleaned will be created inside your latex directory.
+### Note
+- `-dest` or destination directory is relative to the directory in which the main file exists. By default a directory named tex_cleaned will be created inside your latex directory.
+- `-latexit` using latexit will compile the latex files newly created. Remove it from the command line if you want to skip that
 
 Example + UnitTest
 -------
