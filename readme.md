@@ -28,7 +28,7 @@ A couple of things this program is able to handle well,
 - handles 2 kinds of comments well: (a) single line comments `%` and (b) multiline comments `\begin{comment} ... \end{comment}`
 - copies all style and bib files for now. maybe future work would detect the required files before copying. Specifically, extensions ['sty', 'cls', 'bst', 'bib', 'clo'] are all copied by default
 
-A couple of things this program is *not* able to handle well,
+A couple of things this program is **not** able to handle well,
 
 - commands like `\graphicspath{{figures/}}` which add paths to the main file are not supported
 
